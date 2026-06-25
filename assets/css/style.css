@@ -264,18 +264,25 @@ a{
 	color: #fff;
 }
 
-
 /* image-container */
-.image-container{
+.image-container {
 	width: 100%;
+	position: relative;
+	border-radius: 8px; 
+	overflow: hidden; /* 這次留在這，鎖定外框不動 */
+	
+	/* 針對外框的陰影做平滑過渡 */
+	transition: box-shadow 0.3s ease; 
 }
-.image-container:before{
+
+.image-container:before {
 	content: '';
 	display: block;
 	width: 100%;
 	padding-top: 75%;
 }
-.image-container .image{
+
+.image-container .image {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -284,8 +291,25 @@ a{
 	background-position: center;
 	background-size: cover;
 	background-repeat: no-repeat;
+	
+	/* 針對內部圖片的放大做平滑過渡 */
+	transition: transform 0.3s ease; 
 }
 
+/* ==========================================
+   當滑鼠移到容器上時 (:hover) 產生的動態效果
+   ========================================== */
+
+.image-container:hover {
+	cursor: pointer;
+	/* 外框不動，直接加上一層強烈的立體陰影 */
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 1); 
+}
+
+.image-container:hover .image {
+	/* 只有裡面的圖片放大，外框邊界不動，絕對不會被切掉！ */
+	transform: scale(1.08); 
+}
 
 /* navbar */
 .navbar{
@@ -951,19 +975,45 @@ a{
 }
 
 /* eval card */
-.eval-card{
+.eval-card {
 	padding: 16px;
-	box-shadow: 0 3px 20px rgba(0,0,0,0.3);
+	box-shadow: 0 3px 20px rgba(0,0,0,0.15); /* 把預設陰影調淡一點，移上去時對比才明顯 */
 	margin-bottom: 32px;
+	
+	/* 關鍵 1：限制內部圖片放大時不能超出卡片格子 */
+	overflow: hidden; 
+	
+	/* 關鍵 2：讓卡片陰影變化時有平滑的過渡動畫 */
+	transition: box-shadow 0.3s ease; 
 }
-.eval-card .image{
+
+.eval-card .image {
 	display: block;
 	width: 100%;
 	margin-bottom: 16px;
+	
+	/* 關鍵 3：讓圖片放大縮小時有平滑的過渡動畫 */
+	transition: transform 0.3s ease; 
 }
-.eval-card .para{
+
+.eval-card .para {
 	line-height: 32px;
 	font-size: 16px;
+}
+
+/* ==========================================
+   當滑鼠移到評價卡片上時 (:hover)
+   ========================================== */
+
+.eval-card:hover {
+	cursor: pointer;
+	/* 卡片原地不動，但陰影變大變深，營造立體浮空感（絕對不會被上面切掉） */
+	box-shadow: 0 12px 28px rgba(0,0,0,0.3); 
+}
+
+.eval-card:hover .image {
+	/* 裡面的圖片微微拉近放大 1.05 倍 */
+	transform: scale(1.05); 
 }
 
 .masonry-row{
